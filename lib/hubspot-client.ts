@@ -375,7 +375,7 @@ export class HubSpotClient {
       // Create contact
       const apiResponse = await this.client.crm.contacts.basicApi.create({
         properties: contactProperties
-      });
+      } as any);
       
       return apiResponse;
     } catch (error: any) {
@@ -423,7 +423,7 @@ export class HubSpotClient {
       // Create company
       const apiResponse = await this.client.crm.companies.basicApi.create({
         properties: companyProperties
-      });
+      }as any);
       
       return apiResponse;
     } catch (error: any) {
@@ -454,7 +454,7 @@ export class HubSpotClient {
 
       // Update the contact
       const apiResponse = await this.client.crm.contacts.basicApi.update(contactId, {
-        properties
+        { properties } as any
       });
 
       return {
@@ -490,7 +490,7 @@ export class HubSpotClient {
 
       // Update the company
       const apiResponse = await this.client.crm.companies.basicApi.update(companyId, {
-        properties
+        { properties } as any
       });
 
       return {
