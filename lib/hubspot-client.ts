@@ -40,7 +40,7 @@ export class HubSpotClient {
   async getRecentCompanies(limit: number = 10): Promise<any> {
     try {
       // Create search request with sort by lastmodifieddate
-      const searchRequest = {
+      const searchRequest: any = {
         sorts: ['lastmodifieddate:desc'],
         limit,
         properties: ['name', 'domain', 'website', 'phone', 'industry', 'hs_lastmodifieddate']
@@ -61,7 +61,7 @@ export class HubSpotClient {
   async getRecentContacts(limit: number = 10): Promise<any> {
     try {
       // Create search request with sort by lastmodifieddate
-      const searchRequest = {
+      const searchRequest: any = {
         sorts: ['lastmodifieddate:desc'],
         limit,
         properties: ['firstname', 'lastname', 'email', 'phone', 'company', 'hs_lastmodifieddate', 'lastmodifieddate']
