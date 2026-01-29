@@ -453,9 +453,12 @@ export class HubSpotClient {
       }
 
       // Update the contact
-      const apiResponse = await this.client.crm.contacts.basicApi.update(contactId, {
-        { properties } as any
-      });
+      // const apiResponse = await this.client.crm.contacts.basicApi.update(contactId, {
+      //   { properties } as any
+      // });
+      const apiResponse = await this.client.crm.contacts.basicApi.update(contactId,
+      { properties } as any
+      );
 
       return {
         message: 'Contact updated successfully',
@@ -489,9 +492,9 @@ export class HubSpotClient {
       }
 
       // Update the company
-      const apiResponse = await this.client.crm.companies.basicApi.update(companyId, {
+      const apiResponse = await this.client.crm.companies.basicApi.update(companyId, 
         { properties } as any
-      });
+      );
 
       return {
         message: 'Company updated successfully',
