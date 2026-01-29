@@ -1,3 +1,4 @@
+export const runtime = "nodejs";
 import OpenAI from "openai";
 import { HubSpotClient } from "@/lib/hubspot-client";
 
