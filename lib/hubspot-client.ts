@@ -1,8 +1,4 @@
 import { Client } from '@hubspot/api-client';
-import dotenv from 'dotenv';
-
-dotenv.config();
-
 // Convert any datetime objects to ISO strings
 export function convertDatetimeFields(obj: any): any {
   if (obj === null || obj === undefined) {
