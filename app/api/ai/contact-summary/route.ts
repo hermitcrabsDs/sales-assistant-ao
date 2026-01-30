@@ -2,33 +2,31 @@ export async function POST(req: Request) {
   console.log("🔥 CONTACT SUMMARY API HIT");
 
   try {
-    const rawBody = await req.text();
-    console.log("🔥 RAW BODY:", rawBody);
+    const raw = await req.text();
+    console.log("🔥 RAW BODY:", raw);
 
-    const body = rawBody ? JSON.parse(rawBody) : {};
+    const body = raw ? JSON.parse(raw) : {};
+    console.log("🔥 PARSED BODY:", body);
+
     const { contactId } = body;
 
     if (!contactId) {
+      console.log("❌ Missing contactId");
       return Response.json(
         { error: "contactId is required" },
         { status: 400 }
       );
     }
 
-    // ✅ DUMMY RESPONSE (GUARANTEED NON-EMPTY)
+    console.log("✅ contactId received:", contactId);
+
     return Response.json({
-      insight: `
-🧪 Dummy AI Contact Summary
+      insight: `✅ Dummy summary works!
 
-• Contact ID: ${contactId}
-• Engagement: Medium
-• Last activity: Email sent
-
-👉 Next Action:
-Follow up with a call in 2–3 days
-      `.trim(),
+Contact ID: ${contactId}
+Status: Medium engagement
+Next action: Follow up in 2 days`,
     });
-
   } catch (err: any) {
     console.error("❌ API ERROR:", err);
 
