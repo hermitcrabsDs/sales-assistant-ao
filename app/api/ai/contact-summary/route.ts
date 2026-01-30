@@ -1,8 +1,7 @@
-export const runtime = "nodejs";
-
 export async function POST(req: Request) {
   try {
-    const { contactId } = await req.json();
+    const body = await req.json();
+    const { contactId } = body || {};
 
     if (!contactId) {
       return Response.json(
@@ -11,16 +10,26 @@ export async function POST(req: Request) {
       );
     }
 
-    const hubspot = new HubSpotClient(...);
-    const activities = await hubspot.getCompanyActivity(contactId);
-
-    const res = await openai.chat.completions.create(...);
-
+    // ✅ DUMMY RESPONSE (no HubSpot, no OpenAI)
     return Response.json({
-      insight: res.choices[0].message.content,
+      insight: `
+🧪 Dummy AI Contact Summary
+
+• Contact ID: ${contactId}
+• Last activity: Email sent
+• Engagement level: Medium
+
+👉 Next best action:
+Follow up with a call in 2–3 days.
+      `.trim(),
     });
 
-  } catch (err) {
-    console.error(err);
+  } catch (err: any) {
+    console.error("Dummy API error:", err);
+
+    return Response.json(
+      { error: err.message || "Internal server error" },
+      { status: 500 }
+    );
   }
 }
