@@ -1,10 +1,4 @@
 export const runtime = "nodejs";
-import OpenAI from "openai";
-import { HubSpotClient } from "@/lib/hubspot-client";
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
 
 export async function POST(req: Request) {
   try {
@@ -17,36 +11,19 @@ export async function POST(req: Request) {
       );
     }
 
-    const hubspot = new HubSpotClient(
-      process.env.HUBSPOT_ACCESS_TOKEN
-    );
-
-    // Reuse recent engagements (contact-linked)
-    const engagements = await hubspot.getRecentEngagements(14, 30);
-
-    const prompt = `
-You are a CRM sales assistant.
-Analyze the recent activities related to a contact
-and return:
-
-1. Short summary (bullets)
-2. Engagement level (Cold / Warm / Hot)
-3. Next best follow-up action
-
-Recent activities:
-${JSON.stringify(engagements).slice(0, 8000)}
-`;
-
-    const res = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [{ role: "user", content: prompt }],
-    });
-
+    // 🔹 DUMMY AI RESPONSE (OpenAI baad me add karenge)
     return Response.json({
-      insight: res.choices[0].message.content,
+      insight: `
+• Contact had recent interaction (email / note)
+• Engagement level: Warm
+
+Next Action:
+→ Follow-up call within 24 hours
+→ Share pricing / proposal if pending
+      `
     });
+
   } catch (err: any) {
-    console.error(err);
     return Response.json(
       { error: err.message },
       { status: 500 }
