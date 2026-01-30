@@ -1,7 +1,12 @@
 export async function POST(req: Request) {
+  console.log("🔥 CONTACT SUMMARY API HIT");
+
   try {
-    const body = await req.json();
-    const { contactId } = body || {};
+    const rawBody = await req.text();
+    console.log("🔥 RAW BODY:", rawBody);
+
+    const body = rawBody ? JSON.parse(rawBody) : {};
+    const { contactId } = body;
 
     if (!contactId) {
       return Response.json(
@@ -10,22 +15,22 @@ export async function POST(req: Request) {
       );
     }
 
-    // ✅ DUMMY RESPONSE (no HubSpot, no OpenAI)
+    // ✅ DUMMY RESPONSE (GUARANTEED NON-EMPTY)
     return Response.json({
       insight: `
 🧪 Dummy AI Contact Summary
 
 • Contact ID: ${contactId}
+• Engagement: Medium
 • Last activity: Email sent
-• Engagement level: Medium
 
-👉 Next best action:
-Follow up with a call in 2–3 days.
+👉 Next Action:
+Follow up with a call in 2–3 days
       `.trim(),
     });
 
   } catch (err: any) {
-    console.error("Dummy API error:", err);
+    console.error("❌ API ERROR:", err);
 
     return Response.json(
       { error: err.message || "Internal server error" },
