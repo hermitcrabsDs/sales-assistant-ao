@@ -11,22 +11,16 @@ export async function POST(req: Request) {
       );
     }
 
-    // 🔹 DUMMY AI RESPONSE (OpenAI baad me add karenge)
-    return Response.json({
-      insight: `
-• Contact had recent interaction (email / note)
-• Engagement level: Warm
+    const hubspot = new HubSpotClient(...);
+    const activities = await hubspot.getCompanyActivity(contactId);
 
-Next Action:
-→ Follow-up call within 24 hours
-→ Share pricing / proposal if pending
-      `
+    const res = await openai.chat.completions.create(...);
+
+    return Response.json({
+      insight: res.choices[0].message.content,
     });
 
-  } catch (err: any) {
-    return Response.json(
-      { error: err.message },
-      { status: 500 }
-    );
+  } catch (err) {
+    console.error(err);
   }
 }
